@@ -14,6 +14,6 @@ namespace Business.Abstract
         User GetById(Guid id);
         void Add(AddUserDto userDto);
         void Update(User user);
-        //void Delete(User user);
+        void Delete(User user);
     }
 }

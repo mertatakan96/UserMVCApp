@@ -77,5 +77,26 @@ namespace UI.Controllers
                 return View(user);
             }
         }
+
+        public IActionResult ConfirmDelete(Guid id)
+        {
+            var user = _userService.GetById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Guid id)
+        {
+            var user = _userService.GetById(id);
+
+            _userService.Delete(user);
+
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -45,6 +45,11 @@ namespace Business.Concrete
             }
         }
 
+        public void Delete(User user)
+        {
+            _userDal.Delete(user);
+        }
+
         public List<User> GetAll()
         {
             return _userDal.GetAll();
