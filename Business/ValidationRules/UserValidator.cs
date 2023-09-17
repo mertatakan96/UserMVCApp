@@ -13,8 +13,11 @@ namespace Business.ValidationRules
         public UserValidator()
         {
             RuleFor(x => x.Name).NotEmpty().WithMessage("Name cannot be empty");
+            RuleFor(x => x.Name).Matches(@"^[a-zA-Z\s]+$").WithMessage("Name should only contain letters.");
+
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email cannot be empty");
             RuleFor(x => x.Email).EmailAddress().WithMessage("Email is not valid");
+
             RuleFor(x => x.DateOfBirth).NotEmpty().WithMessage("Date of birth cannot be empty");
             RuleFor(x => x.DateOfBirth).Must(BeAValidDate).WithMessage("Date of birth is not valid");
         }
