@@ -16,6 +16,12 @@ namespace Business.ValidationRules
             RuleFor(x => x.Email).NotEmpty().WithMessage("Email cannot be empty");
             RuleFor(x => x.Email).EmailAddress().WithMessage("Email is not valid");
             RuleFor(x => x.DateOfBirth).NotEmpty().WithMessage("Date of birth cannot be empty");
+            RuleFor(x => x.DateOfBirth).Must(BeAValidDate).WithMessage("Date of birth is not valid");
+        }
+
+        private bool BeAValidDate(DateTime date)
+        {
+            return date <= DateTime.Today && date > DateTime.Today.AddYears(-100);
         }
 
     }

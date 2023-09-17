@@ -1,7 +1,10 @@
 using Business.Abstract;
 using Business.Concrete;
+using Business.ValidationRules;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
+using Entities.Concrete;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +17,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserDal, EfUserDal>();
 builder.Services.AddScoped<IUserService, UserManager>();
+builder.Services.AddTransient<IValidator<User>, UserValidator>();
+
 
 var app = builder.Build();
 
