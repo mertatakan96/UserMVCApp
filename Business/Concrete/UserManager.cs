@@ -49,5 +49,24 @@ namespace Business.Concrete
         {
             return _userDal.GetAll();
         }
+
+        public User GetById(Guid id)
+        {
+            return _userDal.Get(u => u.Id == id);
+        }
+
+        public void Update(User user)
+        {
+            var result = _validator.Validate(user);
+
+            if (result.IsValid)
+            {
+                _userDal.Update(user);
+            }
+            else
+            {
+                throw new ValidationException(result.Errors);
+            }
+        }
     }
 }

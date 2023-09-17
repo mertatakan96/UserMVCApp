@@ -9,7 +9,6 @@ namespace UI.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-        private readonly IValidator<User> _validator;
 
         public UserController(IUserService userService)
         {
@@ -45,6 +44,37 @@ namespace UI.Controllers
                 }
 
                 return View(userDto);
+            }
+        }
+
+        public IActionResult Update(Guid id)
+        {
+            var user = _userService.GetById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+        [HttpPost]
+        public IActionResult Update(User user)
+        {
+            try
+            {
+                _userService.Update(user);
+
+                return RedirectToAction("Index");
+            }
+            catch (ValidationException ex)
+            {
+                foreach (var error in ex.Errors)
+                {
+                    ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
+                }
+
+                return View(user);
             }
         }
     }
