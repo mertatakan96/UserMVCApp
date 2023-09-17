@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,11 +30,18 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddUser(User user)
+        public IActionResult AddUser(AddUserDto userDto)
         {
-            _userService.Add(user);
-
-            return StatusCode(201);
+            try
+            {
+                _userService.Add(userDto);
+                return StatusCode(201);
+            }
+            catch (ValidationException ex)
+            {
+                var errors = ex.Errors.Select(x => x.ErrorMessage).ToList();
+                return BadRequest(errors);
+            }
         }
     }
 }

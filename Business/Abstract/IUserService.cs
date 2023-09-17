@@ -1,4 +1,5 @@
 ﻿using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace Business.Abstract
     {
         List<User> GetAll();
         //User GetById(int id);
-        void Add(User user);
+        void Add(AddUserDto userDto);
         //void Update(User user);
         //void Delete(User user);
     }
